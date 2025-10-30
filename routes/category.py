@@ -5,7 +5,7 @@ from schema import CategoryResponse, CategoryCreateSchema, CategorySchema, Categ
 from utils import get_db, get_current_user
 from models import Category, User
 
-categories_router = APIRouter(prefix="/category", tags=["Category"])
+categories_router = APIRouter(prefix="/categories", tags=["Category"])
 
 
 @categories_router.post("", response_model=CategoryResponse)

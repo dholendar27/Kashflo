@@ -20,12 +20,14 @@ class Category(Base):
 
     user_id = Column(UUID, ForeignKey('users.id'))
     user = relationship('User', back_populates='categories')
+    transactions = relationship('Transaction', back_populates='category', cascade='all, delete-orphan')
 
 
 class Transaction(Base):
     __tablename__ = "transactions"
 
     id = Column(UUID, primary_key=True, default=uuid4, nullable=False)
+    name = Column(String, nullable=False)
     transaction_date = Column(DateTime, nullable=False)  # Renamed for clarity
     amount = Column(DECIMAL(10, 2), nullable=False)
     transaction_type = Column(Enum(TransactionType), nullable=False)
@@ -33,7 +35,6 @@ class Transaction(Base):
     user_id = Column(UUID, ForeignKey('users.id'))
     description = Column(Text, nullable=True)
     payment_method = Column(Enum(PaymentMethodEnum), nullable=False)
-    balance_after = Column(DECIMAL(10, 2), nullable=True)
     account = Column(Enum(AccountEnum), nullable=False)
 
     user = relationship('User', back_populates='transactions')
